@@ -1,0 +1,312 @@
+// 6:43 24.03.2020
+/*
+ tasks:
+: add mastering level
+: add alphabet
+: make vocabulary as class
+: hightlight unknown word in the text  
+: find a word in the text
+*/
+
+function Text(ref='text'){
+ this.words = [];
+ this.cur = 0; 
+ this.ref = ref;
+// next
+ this.next = function (){
+  if(this.words[this.cur] && this.words[this.cur].word != ""){
+   this.cur++;
+  }
+ },
+// symbol
+ this.symbol = function (v){
+  if(!this.words[this.cur]) this.words[this.cur] = {word: "", es: -1};
+  if(this.words[this.cur].word != "") this.words[this.cur].word+=v;
+  else this.words[this.cur].word = v;
+ },
+// gather
+ this.gather = function (){
+  var m = document.getElementById(this.ref).value;
+  for(var i=0; i < m.length; i++){
+   var v = m.substr(i,1);
+   if(v == ' '){ this.next();continue;}
+   if(v == '\n'){ this.next();continue;}
+   this.symbol(v);
+  }
+ },
+// compare
+ this.compare = function (V){
+  for(var i = 0; i < this.words.length; i++){
+   if(V.take(this.words[i].word) == -1)
+    this.words[i].es = -1;
+   else this.words[i].es = 0;
+
+  }
+ },
+// show
+ this.show = function (ref){
+  var t = "";
+  for(var i=0; i < this.words.length; i++){
+   if(i != 0) t += " ";
+   var word = this.words[i].word;
+   if(this.words[i].es == -1){
+    t += "<span style='color: red;'>"; 
+    t += word;
+    t += "</span>"
+   }else t += word;
+  }
+  document.getElementById(ref).innerHTML = t;
+ },
+// take
+ this.take = function (item){
+  var f = -1;
+  for(var i = 0; i < this.words.length; i++){
+   if(this.words[i].word == item){
+    f = i;
+    break;
+   }
+  }
+  return f;
+ }
+//end of Obj
+}
+
+function Vocabulary(){
+ this.words=[];
+ this.add = function(w){
+  var l = this.words.length;
+  this.words[l] = {w:w,c:1};
+ }
+ this.increase = function (w_ind){
+  this.words[w_ind].c++;
+ }
+ this.find = function (w){
+  var w_ind = -1; 
+  for(i = 0; i < this.words.length; i++){
+   if(this.words[i].w == w){
+    w_ind = i; break;
+   }
+  }
+  return w_ind;
+ }
+ this.update = function (w){
+  var w_ind = this.find(w);
+  if(w_ind == -1) this.add(w);
+  else this.increase(w_ind);
+ }  
+ 
+ this.merge = function (Words){
+  for(var i =0; i < Words.length; i++){
+   this.update(Words[i]);
+  } 
+ }
+
+}
+/*
+var A = new Text()
+A.gather();
+A.show('out');
+var B = new Text('text2');
+B.gather();
+B.show('out2');
+var V = new Vocabulary();
+V.merge(A.words)
+*/
+/*
+var A = new Vocabulary
+A.gather();
+A.compare();
+A.words;
+A.show('out')
+*/
+
+/*
+Vocabulary.words = [];
+Vocabulary.cur = 0;
+Vocabulary.gather();
+Vocabulary.compare();
+Vocabulary.words;
+Vocabulary.show('out')
+*/
+
+//var textarea = "<textarea id=text>";
+//document.getElementByTagName('body')[0].html += textarea
+
+var text ={words:[], cur:0, ref:'text'};
+
+text.next = function next(){
+ if(this.words[this.cur] && this.words[this.cur].word != ""){
+  this.cur++;
+ }
+}
+text.symbol = function symbol(v){
+  if(!this.words[this.cur]) this.words[this.cur] = {word: "", es: -1};
+  if(this.words[this.cur].word != "") this.words[this.cur].word+=v;
+  else this.words[this.cur].word = v;
+}
+text.gather = function gather(){
+ var m = document.getElementById(this.ref).value;
+ for(var i=0; i < m.length; i++){
+  var v = m.substr(i,1);
+  if(v == ' '){ this.next();continue;}
+  if(v == '\n'){ this.next();continue;}
+  this.symbol(v);
+ }
+}
+text.compare = function compare(V){
+ for(var i = 0; i < text.words.length; i++){
+  if(V.take(text.words[i].word) == -1)
+   text.words[i].es = -1;
+  else text.words[i].es = 0;
+
+ }
+}
+text.show = function show(ref){
+ var t = "";
+ for(var i=0; i < text.words.length; i++){
+  if(i != 0) t += " ";
+  var word = text.words[i].word;
+  if(text.words[i].es == -1){
+   t += "<span style='color: red;'>"; 
+   t += word;
+   t += "</span>"
+  }else t += word;
+ }
+ document.getElementById(ref).innerHTML = t;
+}
+
+text.take = function take(item){
+ var f = -1;
+ for(var i = 0; i < text.words.length; i++){
+//  if(text.words[list[i]].w == item){
+  if(text.words[i].word == item){
+   f = i;
+   break;
+  }
+ }
+ return f;
+}
+
+var m = document.getElementById('text').value;
+var ind = 0;
+
+
+var ttt = [];
+ttt[0]="";
+function next(_ttt){
+if(_ttt[ind]!=""){ind++; _ttt[ind]="";}
+}
+function gather(_ttt,m){
+ for(var i=0; i < m.length; i++){
+ var v = m.substr(i,1);
+ if(v == ' '){ next(_ttt);continue;}
+ if(v == '\n'){ next(_ttt);continue;}
+ _ttt[ind]+=v;
+ }
+}
+
+/////////////
+
+var ddd=[];
+function add(w){
+ var l = ddd.length;
+ ddd[l] = {w:w,c:1};
+}
+function increase(w_ind){
+ ddd[w_ind].c++;
+}
+function find(w){
+ var w_ind = -1; 
+ for(i = 0; i < ddd.length; i++){
+  if(ddd[i].w == w){
+   w_ind = i; break;
+  }
+ }
+ return w_ind;
+}
+function update(w){
+ var w_ind = find(w);
+ if(w_ind == -1) add(w);
+ else increase(w_ind);
+}
+
+function merge(){
+ for(var i =0; i < ttt.length; i++){
+  update(ttt[i]);
+ } 
+}
+
+var list = [];
+function append(item){
+ var l = list.length;
+ list[l] = {w:item.w,c:item.c};
+}
+function position(item, compare){
+ var l = list.length;
+ var pos = l;
+ for(var i = 0; i < l; i++){
+  if(compare(item,list[i])){
+   pos = i; break;
+  }
+ }
+ return pos;
+}
+
+function compare(item1, item2){
+ return (ddd[item1].c > ddd[item2].c);
+}
+
+function shove(item, pos){
+ var l = list.length;
+ if(l > 0){
+  list[l] = list[l-1];
+  for( var i = l-1; i > pos; i --){
+   list[i] = list[i-1];
+  }
+  list[pos] = item;
+ }else{
+  list[0] = item;
+ }
+}
+function sort(){
+ for(var j = 0; j < ddd.length; j++){
+  var t = ddd[j];
+  shove(j, position(j, compare));
+
+ }
+
+}
+function run(){
+gather(ttt,m);
+merge()
+sort();
+}
+run();
+function show(){
+ var lll =[];
+ for(var i = 0; i < ddd.length; i++){
+  lll[i] = ddd[list[i]];
+ }
+ return lll;
+}
+
+var total = 0;
+function sum(){
+ 
+}
+
+function take(item){
+ var f = -1;
+ for(var i = 0; i < list.length; i++){
+  if(ddd[list[i]].w == item){
+   f = i;
+   break;
+  }
+ }
+ return f;
+}
+
+
+show();
+
+// 6:58 24.03.2020
