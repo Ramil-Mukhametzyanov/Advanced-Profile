@@ -1,4 +1,4 @@
-// 7:22 25.03.2020
+// 23:45 25.03.2020
 /*
  tasks:
 : add mastering level
@@ -12,6 +12,7 @@ function Text(ref='text'){
  this.words = [];
  this.cur = 0; 
  this.ref = ref;
+ this.skips = [" ", "\n"];
 // next
  this.next = function (){
   if(this.words[this.cur] && this.words[this.cur].word != ""){
@@ -27,10 +28,24 @@ function Text(ref='text'){
 // gather
  this.gather = function (){
   var m = document.getElementById(this.ref).value;
-  for(var i=0; i < m.length; i++){
+  for(var i = 0; i < m.length; i++){
    var v = m.substr(i,1);
-   if(v == ' '){ this.next();continue;}
-   if(v == '\n'){ this.next();continue;}
+    if(v == " "){
+     this.next();
+     continue;
+    }
+    if(v == "\n"){
+     this.next();
+     continue;
+    }
+/*
+   for(var j = 0; j < this.skips.length; j++){
+    if(v == this.skips[j]){
+     this.next();
+     continue;
+    }
+   }
+*/
    this.symbol(v);
   }
  },
@@ -163,4 +178,4 @@ console.log(V.show());
 
 
 
-// 7:37 25.03.2020
+// 0:00 26.03.2020
