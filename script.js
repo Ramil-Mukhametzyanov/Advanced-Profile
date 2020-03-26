@@ -1,6 +1,7 @@
-// 23:45 25.03.2020
+// 6:26 26.03.2020
 /*
  tasks:
+: quick sort
 : add mastering level
 : add alphabet
 : make vocabulary as class
@@ -24,6 +25,7 @@ function Text(ref='text'){
   if(!this.words[this.cur]) this.words[this.cur] = {word: "", es: -1};
   if(this.words[this.cur].word != "") this.words[this.cur].word+=v;
   else this.words[this.cur].word = v;
+  this.abc.update_and_sort(v);
  },
 // gather
  this.gather = function (){
@@ -38,14 +40,12 @@ function Text(ref='text'){
      this.next();
      continue;
     }
-/*
    for(var j = 0; j < this.skips.length; j++){
     if(v == this.skips[j]){
      this.next();
-     continue;
+     break;
     }
    }
-*/
    this.symbol(v);
   }
  },
@@ -83,7 +83,11 @@ function Text(ref='text'){
   }
   return f;
  }
-//end of Obj
+// alphabet
+ this.abc = new Vocabulary();
+ this.alphabet = function(){
+  
+ } 
 }
 
 function Vocabulary(){
@@ -108,6 +112,12 @@ function Vocabulary(){
   var w_ind = this.find(w);
   if(w_ind == -1) this.add(w);
   else this.increase(w_ind);
+ }  
+ this.update_and_sort = function (w){
+//////
+  this.update(w);
+//  this.quick_sort(w);
+  this.sort();
  }  
  
  this.merge = function (Words){
@@ -155,6 +165,9 @@ function Vocabulary(){
    this.shove(j, this.position(j));  
   }
  }
+ this.quick_sort = function(w){
+ }
+
  this.show = function (){
   var sorted =[];
   for(var i = 0; i < this.words.length; i++){
