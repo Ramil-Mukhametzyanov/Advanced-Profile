@@ -1,6 +1,7 @@
-// 7:40 29.03.2020
+// 17:59 29.03.2020
 /*
  tasks:
+:  fix - words are duplicated in Vocabulary
 : coloring words and symbols by frequency and mastering
 : quick sort
 : add mastering level
@@ -56,7 +57,8 @@ function Text(ref='text'){
 // compare
  this.compare = function (V){
   for(var i = 0; i < this.words.length; i++){
-   if(V.take(this.words[i].word) == -1)
+//   if(V.take(this.words[i].word) == -1)
+   if(V.find(this.words[i].word) == -1)
     this.words[i].es = -1;
    else this.words[i].es = 0;
 
@@ -180,21 +182,37 @@ function Vocabulary(){
   }
   return sorted;
  }
+/*
+ this.take = function (item){
+  var f = -1;
+  for(var i = 0; i < this.words.length; i++){
+   if(this.words[this.list[i]].w == item){
+    f = i;
+    break;
+   }
+  }
+  return f;
+ }
+*/
 }
 
 var A = new Text()
 A.gather();
 A.show('out');
-var B = new Text('text2');
-B.gather();
-B.compare(A);
-B.show('out2');
 var V = new Vocabulary();
 V.merge(A.words)
 V.sort();
+var B = new Text('text2');
+B.gather();
+B.compare(V);
+//B.compare(A);
+B.show('out2');
+//var V = new Vocabulary();
+//V.merge(A.words)
+//V.sort();
 console.log(V.show());
 console.log(A.alphabet());
 
 
 
-// 7:55 29.03.2020
+// 18:20 29.03.2020
