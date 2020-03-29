@@ -1,6 +1,7 @@
-// 6:26 26.03.2020
+// 7:40 29.03.2020
 /*
  tasks:
+: coloring words and symbols by frequency and mastering
 : quick sort
 : add mastering level
 : add alphabet
@@ -25,9 +26,12 @@ function Text(ref='text'){
   if(!this.words[this.cur]) this.words[this.cur] = {word: "", es: -1};
   if(this.words[this.cur].word != "") this.words[this.cur].word+=v;
   else this.words[this.cur].word = v;
-  this.abc.update_and_sort(v);
+//  this.abc.update_and_sort(v);
+  this.abc.update(v);
+
  },
 // gather
+ this.abc = new Vocabulary();
  this.gather = function (){
   var m = document.getElementById(this.ref).value;
   for(var i = 0; i < m.length; i++){
@@ -84,9 +88,9 @@ function Text(ref='text'){
   return f;
  }
 // alphabet
- this.abc = new Vocabulary();
  this.alphabet = function(){
-  
+  this.abc.sort();
+  return this.abc.show();
  } 
 }
 
@@ -94,7 +98,7 @@ function Vocabulary(){
  this.words = [];
  this.add = function(w){
   var l = this.words.length;
-  this.words[l] = {w:w,c:1};
+  this.words[l] = {w:w,c:1,m:0}; // c=count, m=mastering
  }
  this.increase = function (w_ind){
   this.words[w_ind].c++;
@@ -165,7 +169,8 @@ function Vocabulary(){
    this.shove(j, this.position(j));  
   }
  }
- this.quick_sort = function(w){
+ this.quick_sort = function(w_ind){
+  
  }
 
  this.show = function (){
@@ -188,7 +193,8 @@ var V = new Vocabulary();
 V.merge(A.words)
 V.sort();
 console.log(V.show());
+console.log(A.alphabet());
 
 
 
-// 0:00 26.03.2020
+// 7:55 29.03.2020
