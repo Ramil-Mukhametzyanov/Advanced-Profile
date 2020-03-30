@@ -1,6 +1,7 @@
-// 17:59 29.03.2020
+// 8:27 30.03.2020
 /*
  tasks:
+: drag&drop text to text (apply vocabulary to text)
 :  fix - words are duplicated in Vocabulary
 : coloring words and symbols by frequency and mastering
 : quick sort
@@ -11,6 +12,19 @@
 : find a word in the text
 */
 
+/*
+var mouseDown = false;
+
+document.body.onmousedown = function() { 
+  console.log("MOUSE DOWN");
+  mouseDown = true;
+
+}
+document.body.onmouseup = function() {
+  console.log("MOUSE UP");
+  mouseDown = false;
+}
+*/
 function Text(ref='text'){
  this.words = [];
  this.cur = 0; 
@@ -195,24 +209,60 @@ function Vocabulary(){
  }
 */
 }
-
+/*
 var A = new Text()
 A.gather();
 A.show('out');
 var V = new Vocabulary();
 V.merge(A.words)
 V.sort();
-var B = new Text('text2');
-B.gather();
-B.compare(V);
+
+var B1 = new Text('text1');
+B1.gather();
+B1.compare(V);
 //B.compare(A);
-B.show('out2');
+B1.show('out1');
+
+var B2 = new Text('text2');
+B2.gather();
+B2.compare(V);
+//B.compare(A);
+B2.show('out2');
 //var V = new Vocabulary();
 //V.merge(A.words)
 //V.sort();
 console.log(V.show());
 console.log(A.alphabet());
+*/
+var A1 = new Text()
+A1.gather();
+A1.show('out');
+var V1 = new Vocabulary();
+V1.merge(A1.words)
+V1.sort();
+console.log(V1.show());
+console.log(A1.alphabet());
+/*
+var A2 = new Text('text1')
+A2.gather();
+A2.show('out1');
+var V2 = new Vocabulary();
+V2.merge(A2.words)
+V2.sort();
+console.log(V2.show());
+console.log(A2.alphabet());
+*/
+var B2 = new Text('text2');
+B2.gather();
+B2.compare(V1);
+B2.show('out2');
+/*
+var B3 = new Text('text2');
+B3.gather();
+B3.compare(V2);
+B3.show('out3');
+*/
 
 
 
-// 18:20 29.03.2020
+// 8:46 30.03.2020
