@@ -1,6 +1,7 @@
-// 8:27 30.03.2020
+// 23:08 30.03.2020
 /*
  tasks:
+: SQL
 : drag&drop text to text (apply vocabulary to text)
 :  fix - words are duplicated in Vocabulary
 : coloring words and symbols by frequency and mastering
@@ -12,7 +13,6 @@
 : find a word in the text
 */
 
-/*
 var mouseDown = false;
 
 document.body.onmousedown = function() { 
@@ -24,7 +24,29 @@ document.body.onmouseup = function() {
   console.log("MOUSE UP");
   mouseDown = false;
 }
-*/
+
+var BUF = {};
+
+
+function o(id){
+ BUF.from = id;
+ BUF.to = "";
+ console.log(BUF);
+ for(var i = 0; i < 4; i++){
+  document.getElementById('out' + i).style.cursor = "move";
+ }
+// document.getElementsByTagName('body')[0].style.cursor = "move";
+}
+function u(id){
+ BUF.to = id;
+ console.log(BUF);
+ A[BUF.to].compare(V[BUF.from]);
+ A[BUF.to].show('out' + id)
+ for(var i = 0; i < 4; i++){
+  document.getElementById('out' + i).style.cursor = "pointer";
+ }
+}
+
 function Text(ref='text'){
  this.words = [];
  this.cur = 0; 
@@ -73,7 +95,8 @@ function Text(ref='text'){
   for(var i = 0; i < this.words.length; i++){
 //   if(V.take(this.words[i].word) == -1)
    if(V.find(this.words[i].word) == -1)
-    this.words[i].es = -1;
+	{}
+//    this.words[i].es = -1;
    else this.words[i].es = 0;
 
   }
@@ -209,60 +232,20 @@ function Vocabulary(){
  }
 */
 }
-/*
-var A = new Text()
-A.gather();
-A.show('out');
-var V = new Vocabulary();
-V.merge(A.words)
-V.sort();
 
-var B1 = new Text('text1');
-B1.gather();
-B1.compare(V);
-//B.compare(A);
-B1.show('out1');
-
-var B2 = new Text('text2');
-B2.gather();
-B2.compare(V);
-//B.compare(A);
-B2.show('out2');
-//var V = new Vocabulary();
-//V.merge(A.words)
-//V.sort();
-console.log(V.show());
-console.log(A.alphabet());
-*/
-var A1 = new Text()
-A1.gather();
-A1.show('out');
-var V1 = new Vocabulary();
-V1.merge(A1.words)
-V1.sort();
-console.log(V1.show());
-console.log(A1.alphabet());
-/*
-var A2 = new Text('text1')
-A2.gather();
-A2.show('out1');
-var V2 = new Vocabulary();
-V2.merge(A2.words)
-V2.sort();
-console.log(V2.show());
-console.log(A2.alphabet());
-*/
-var B2 = new Text('text2');
-B2.gather();
-B2.compare(V1);
-B2.show('out2');
-/*
-var B3 = new Text('text2');
-B3.gather();
-B3.compare(V2);
-B3.show('out3');
-*/
+var A = [];
+var V = [];
+for(var i = 0; i < 4; i++){
+ A[i] = new Text('text' + i)
+ A[i].gather();
+ A[i].show('out' + i);
+ V[i] = new Vocabulary();
+ V[i].merge(A[i].words)
+ V[i].sort();
+ console.log(V[i].show());
+ console.log(A[i].alphabet());
+}
 
 
 
-// 8:46 30.03.2020
+// 23:52 30.03.2020
