@@ -1,6 +1,7 @@
-// 23:08 30.03.2020
+// 8:10 31.03.2020
 /*
  tasks:
+: call insrease word level program by clicking on a word
 : SQL
 : drag&drop text to text (apply vocabulary to text)
 :  fix - words are duplicated in Vocabulary
@@ -35,7 +36,6 @@ function o(id){
  for(var i = 0; i < 4; i++){
   document.getElementById('out' + i).style.cursor = "move";
  }
-// document.getElementsByTagName('body')[0].style.cursor = "move";
 }
 function u(id){
  BUF.to = id;
@@ -52,6 +52,10 @@ function Text(ref='text'){
  this.cur = 0; 
  this.ref = ref;
  this.skips = [" ", "\n"];
+ this.scheme = {'-1':'red'};
+ this.set_scheme = function(scheme){
+  this.scheme = scheme;
+ }
 // next
  this.next = function (){
   if(this.words[this.cur] && this.words[this.cur].word != ""){
@@ -92,23 +96,23 @@ function Text(ref='text'){
  },
 // compare
  this.compare = function (V){
+  var m = -1;
   for(var i = 0; i < this.words.length; i++){
-//   if(V.take(this.words[i].word) == -1)
-   if(V.find(this.words[i].word) == -1)
+   id = V.find(this.words[i].word);
+   if(id == -1)
 	{}
-//    this.words[i].es = -1;
-   else this.words[i].es = 0;
+   else this.words[i].es = V.level(id);
 
   }
  },
-// show
- this.show = function (ref){
+ this.show = function (ref, scheme=this.scheme){
   var t = "";
   for(var i=0; i < this.words.length; i++){
    if(i != 0) t += " ";
    var word = this.words[i].word;
-   if(this.words[i].es == -1){
-    t += "<span style='color: red;'>"; 
+   var m = this.words[i].es;
+   if(m == -1){
+    t += "<span style='color: " + scheme[m] + ";'>"; 
     t += word;
     t += "</span>"
    }else t += word;
@@ -135,6 +139,9 @@ function Text(ref='text'){
 
 function Vocabulary(){
  this.words = [];
+ this.level = function (id){
+  return this.words[id].m;
+ }
  this.add = function(w){
   var l = this.words.length;
   this.words[l] = {w:w,c:1,m:0}; // c=count, m=mastering
@@ -157,7 +164,6 @@ function Vocabulary(){
   else this.increase(w_ind);
  }  
  this.update_and_sort = function (w){
-//////
   this.update(w);
 //  this.quick_sort(w);
   this.sort();
@@ -219,18 +225,6 @@ function Vocabulary(){
   }
   return sorted;
  }
-/*
- this.take = function (item){
-  var f = -1;
-  for(var i = 0; i < this.words.length; i++){
-   if(this.words[this.list[i]].w == item){
-    f = i;
-    break;
-   }
-  }
-  return f;
- }
-*/
 }
 
 var A = [];
@@ -238,6 +232,7 @@ var V = [];
 for(var i = 0; i < 4; i++){
  A[i] = new Text('text' + i)
  A[i].gather();
+ if(i) A[i].set_scheme({'-1':'green'});
  A[i].show('out' + i);
  V[i] = new Vocabulary();
  V[i].merge(A[i].words)
@@ -248,4 +243,4 @@ for(var i = 0; i < 4; i++){
 
 
 
-// 23:52 30.03.2020
+// 8:10 31.03.2020
