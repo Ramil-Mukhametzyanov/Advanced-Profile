@@ -1,4 +1,4 @@
-// 8:10 31.03.2020
+// 14:27 31.03.2020
 /*
  tasks:
 : call insrease word level program by clicking on a word
@@ -105,14 +105,19 @@ function Text(ref='text'){
 
   }
  },
- this.show = function (ref, scheme=this.scheme){
+ this.show = function (ref, scheme=this.scheme, V=""){
   var t = "";
+  if(V != ""){
+   var func = V + ".up(" + V + ".find('";
+  }
   for(var i=0; i < this.words.length; i++){
    if(i != 0) t += " ";
    var word = this.words[i].word;
    var m = this.words[i].es;
    if(m == -1){
-    t += "<span style='color: " + scheme[m] + ";'>"; 
+    t += "<span style='color: " + scheme[m] + ";' ";
+    if(V != "") t += "onclick=\"" + func + word + "'));\" ";
+    t += ">"; 
     t += word;
     t += "</span>"
    }else t += word;
@@ -148,6 +153,11 @@ function Vocabulary(){
  }
  this.increase = function (w_ind){
   this.words[w_ind].c++;
+  console.log("increase " + w_ind + " -> " + this.words[w_ind].c);
+ }
+ this.up = function (w_ind){
+  this.words[w_ind].m++;
+  console.log("up " + w_ind + " -> " + this.words[w_ind].m);
  }
  this.find = function (w){
   var w_ind = -1; 
@@ -156,6 +166,7 @@ function Vocabulary(){
     w_ind = i; break;
    }
   }
+  console.log("find '" + w + "' -> " + w_ind);
   return w_ind;
  }
  this.update = function (w){
@@ -232,8 +243,10 @@ var V = [];
 for(var i = 0; i < 4; i++){
  A[i] = new Text('text' + i)
  A[i].gather();
- if(i) A[i].set_scheme({'-1':'green'});
- A[i].show('out' + i);
+ if(i) A[i].show('out' + i);
+ else{
+  A[0].show('out' + i, {'-1':'green'}, "V[0]"); 
+ }
  V[i] = new Vocabulary();
  V[i].merge(A[i].words)
  V[i].sort();
