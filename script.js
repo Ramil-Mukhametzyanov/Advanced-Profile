@@ -1,6 +1,7 @@
-// 14:27 31.03.2020
+// 10:50 01.04.2020
 /*
  tasks:
+: program (type every symbol correctly). If typed a wrong symbol, it is a mistake. Each mistake requires users to type the word correctly twice additionaly.
 : call insrease word level program by clicking on a word
 : SQL
 : drag&drop text to text (apply vocabulary to text)
@@ -105,18 +106,21 @@ function Text(ref='text'){
 
   }
  },
- this.show = function (ref, scheme=this.scheme, V=""){
+// this.show = function (ref, scheme=this.scheme, V=""){
+ this.show = function (ref, scheme=this.scheme, P=""){
   var t = "";
-  if(V != ""){
-   var func = V + ".up(" + V + ".find('";
-  }
+  
+//  if(V != ""){
+//   var func = V + ".up(" + V + ".find('";
+//  }
   for(var i=0; i < this.words.length; i++){
    if(i != 0) t += " ";
    var word = this.words[i].word;
    var m = this.words[i].es;
    if(m == -1){
     t += "<span style='color: " + scheme[m] + ";' ";
-    if(V != "") t += "onclick=\"" + func + word + "'));\" ";
+//    if(V != "") t += "onclick=\"" + func + word + "'));\" ";
+    if(P != "") t += "onclick=\"" + P + ".method('" + word + "');\" ";
     t += ">"; 
     t += word;
     t += "</span>"
@@ -140,6 +144,16 @@ function Text(ref='text'){
   this.abc.sort();
   return this.abc.show();
  } 
+}
+function Program(Vocabulary){
+ this.V = Vocabulary;
+ this.levelup = function(word){
+  this.V.up(this.V.find(word));
+ }
+ this.method = function(word){
+  var el = document.getElementById('pro0');
+  el.innerHTML = " <div>" + word+ "</div>" + "<textarea id=t></textarea>" + "<div onclick=\"alert(document.getElementById('t').value=='" + word + "');\">Done</div>";//"</input type=text id=t></input>";
+ }
 }
 
 function Vocabulary(){
@@ -243,17 +257,18 @@ var V = [];
 for(var i = 0; i < 4; i++){
  A[i] = new Text('text' + i)
  A[i].gather();
- if(i) A[i].show('out' + i);
- else{
-  A[0].show('out' + i, {'-1':'green'}, "V[0]"); 
- }
  V[i] = new Vocabulary();
  V[i].merge(A[i].words)
  V[i].sort();
+ if(i) A[i].show('out' + i);
+ else{
+  var P = new Program(V[0]);
+  A[0].show('out' + i, {'-1':'green'}, "P"); 
+ }
  console.log(V[i].show());
  console.log(A[i].alphabet());
 }
 
 
 
-// 8:10 31.03.2020
+// 11:10 01.04.2020
