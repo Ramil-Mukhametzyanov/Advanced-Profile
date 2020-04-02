@@ -1,4 +1,4 @@
-// 10:50 01.04.2020
+// 6:49 02.04.2020
 /*
  tasks:
 : program (type every symbol correctly). If typed a wrong symbol, it is a mistake. Each mistake requires users to type the word correctly twice additionaly.
@@ -49,6 +49,7 @@ function u(id){
 }
 
 function Text(ref='text'){
+ this.name = "text";
  this.words = [];
  this.cur = 0; 
  this.ref = ref;
@@ -106,20 +107,18 @@ function Text(ref='text'){
 
   }
  },
-// this.show = function (ref, scheme=this.scheme, V=""){
  this.show = function (ref, scheme=this.scheme, P=""){
   var t = "";
   
-//  if(V != ""){
-//   var func = V + ".up(" + V + ".find('";
-//  }
   for(var i=0; i < this.words.length; i++){
    if(i != 0) t += " ";
    var word = this.words[i].word;
    var m = this.words[i].es;
    if(m == -1){
     t += "<span style='color: " + scheme[m] + ";' ";
-//    if(V != "") t += "onclick=\"" + func + word + "'));\" ";
+    t += "<span ";
+    t += "id=" + this.name + i + " ";
+    t += "style='color: " + scheme[m] + ";' ";
     if(P != "") t += "onclick=\"" + P + ".method('" + word + "');\" ";
     t += ">"; 
     t += word;
@@ -146,13 +145,20 @@ function Text(ref='text'){
  } 
 }
 function Program(Vocabulary){
+ this.name = "P";
  this.V = Vocabulary;
  this.levelup = function(word){
-  this.V.up(this.V.find(word));
+  var id = this.V.find(word);
+  this.V.up(id);
+  console.log("levelup " + word + " --> " + this.V.level(id));
  }
  this.method = function(word){
+// this.method = function(id){
   var el = document.getElementById('pro0');
-  el.innerHTML = " <div>" + word+ "</div>" + "<textarea id=t></textarea>" + "<div onclick=\"alert(document.getElementById('t').value=='" + word + "');\">Done</div>";//"</input type=text id=t></input>";
+  var func = function(id, word){
+   alert(document.getElementById(id).value == word);
+  }
+  el.innerHTML = " <div>" + word+ "</div>" + "<textarea id=t></textarea>" + "<div onclick=\"if(document.getElementById('t').value=='" + word + "') " + this.name + ".levelup('" + word + "');\">Done</div>";//"</input type=text id=t></input>";
  }
 }
 
@@ -271,4 +277,4 @@ for(var i = 0; i < 4; i++){
 
 
 
-// 11:10 01.04.2020
+// 7:08 02.04.2020
