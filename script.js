@@ -1,18 +1,18 @@
-// 6:49 02.04.2020
+// 7:19 06.04.2020
 /*
  tasks:
 : program (type every symbol correctly). If typed a wrong symbol, it is a mistake. Each mistake requires users to type the word correctly twice additionaly.
-: call insrease word level program by clicking on a word
-: SQL
-: drag&drop text to text (apply vocabulary to text)
+: [done] call insrease word level program by clicking on a word
+: SQL! - time for this?
+: [done] drag&drop text to text (apply vocabulary to text)
 :  fix - words are duplicated in Vocabulary
 : coloring words and symbols by frequency and mastering
 : quick sort
-: add mastering level
-: add alphabet
-: make vocabulary as class
-: hightlight unknown word in the text  
-: find a word in the text
+: [done] add mastering level
+: [done] add alphabet
+: [done] make vocabulary as class
+: [done] hightlight unknown word in the text  
+: [done] find a word in the text
 */
 
 var mouseDown = false;
@@ -49,7 +49,7 @@ function u(id){
 }
 
 function Text(ref='text'){
- this.name = "text";
+ this.name = "onetext";
  this.words = [];
  this.cur = 0; 
  this.ref = ref;
@@ -58,6 +58,15 @@ function Text(ref='text'){
  this.set_scheme = function(scheme){
   this.scheme = scheme;
  }
+ this.output = "";
+ this.set_out = function(out){
+  this.output = out;
+ }
+ this.program = "";
+ this.set_program = function(program){
+  this.program = program;
+ }
+ 
 // next
  this.next = function (){
   if(this.words[this.cur] && this.words[this.cur].word != ""){
@@ -106,15 +115,15 @@ function Text(ref='text'){
    else this.words[i].es = V.level(id);
 
   }
- },
- this.show = function (ref, scheme=this.scheme, P=""){
+ };
+ this.show = function (ref=this.output, P=this.program, scheme=this.scheme){
   var t = "";
   
   for(var i=0; i < this.words.length; i++){
    if(i != 0) t += " ";
    var word = this.words[i].word;
    var m = this.words[i].es;
-   if(m == -1){
+//   if(m == -1){
     t += "<span style='color: " + scheme[m] + ";' ";
     t += "<span ";
     t += "id=" + this.name + i + " ";
@@ -123,7 +132,7 @@ function Text(ref='text'){
     t += ">"; 
     t += word;
     t += "</span>"
-   }else t += word;
+//   }else t += word;
   }
   document.getElementById(ref).innerHTML = t;
  },
@@ -151,6 +160,12 @@ function Program(Vocabulary){
   var id = this.V.find(word);
   this.V.up(id);
   console.log("levelup " + word + " --> " + this.V.level(id));
+  var el = document.getElementById('in');
+  el.parentNode.removeChild(el);
+/////-----!!!!!
+  A[0].compare(this.V);
+  A[0].show()
+/////!!!!!-----
  }
  this.method = function(word){
 // this.method = function(id){
@@ -158,7 +173,7 @@ function Program(Vocabulary){
   var func = function(id, word){
    alert(document.getElementById(id).value == word);
   }
-  el.innerHTML = " <div>" + word+ "</div>" + "<textarea id=t></textarea>" + "<div onclick=\"if(document.getElementById('t').value=='" + word + "') " + this.name + ".levelup('" + word + "');\">Done</div>";//"</input type=text id=t></input>";
+  el.innerHTML = " <div id=in><div>" + word+ "</div>" + "<textarea id=t></textarea>" + "<div onclick=\"if(document.getElementById('t').value=='" + word + "') " + this.name + ".levelup('" + word + "');\">Done</div>";//"</input type=text id=t></input></div>";
  }
 }
 
@@ -269,12 +284,14 @@ for(var i = 0; i < 4; i++){
  if(i) A[i].show('out' + i);
  else{
   var P = new Program(V[0]);
-  A[0].show('out' + i, {'-1':'green'}, "P"); 
+  A[0].set_scheme({'-1':'green', '0': 'black', '1': 'blue'});
+  A[0].set_program("P");
+  A[0].set_out('out' + i);
+  A[0].show(); 
  }
  console.log(V[i].show());
  console.log(A[i].alphabet());
 }
 
 
-
-// 7:08 02.04.2020
+/// 7:33 06.04.2020
