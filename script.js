@@ -1,6 +1,7 @@
-// 7:19 06.04.2020
+// 7:08 09.04.2020
 /*
  tasks:
+: style for level more than max defined or less than min defined.
 : program (type every symbol correctly). If typed a wrong symbol, it is a mistake. Each mistake requires users to type the word correctly twice additionaly.
 : [done] call insrease word level program by clicking on a word
 : SQL! - time for this?
@@ -160,8 +161,13 @@ function Program(Vocabulary){
   var id = this.V.find(word);
   this.V.up(id);
   console.log("levelup " + word + " --> " + this.V.level(id));
-  var el = document.getElementById('in');
-  el.parentNode.removeChild(el);
+  var c = document.getElementById('c').innerHTML;
+  if(eval(c) <= 0){
+   var el = document.getElementById('in');
+   el.parentNode.removeChild(el);
+  }else{
+   document.getElementById('c').innverHTML = c
+  }
 /////-----!!!!!
   A[0].compare(this.V);
   A[0].show()
@@ -173,7 +179,7 @@ function Program(Vocabulary){
   var func = function(id, word){
    alert(document.getElementById(id).value == word);
   }
-  el.innerHTML = " <div id=in><div>" + word+ "</div>" + "<textarea id=t></textarea>" + "<div onclick=\"if(document.getElementById('t').value=='" + word + "') " + this.name + ".levelup('" + word + "');\">Done</div>";//"</input type=text id=t></input></div>";
+  el.innerHTML = " <div id=in><div>" + word+ "</div>" + "<textarea id=t></textarea><div id=c hidden>1</div>" + "<div onclick=\"if(document.getElementById('t').value=='" + word + "'){var c = document.getElementById('c').innerHTML; c= eval(c) - 1; document.getElementById('c').innerHTML=c;if(c==0){ " + this.name + ".levelup('" + word + "');}}else{var c = document.getElementById('c').innerHTML; c= eval(c) + 2; document.getElementById('c').innerHTML=c;};document.getElementById('t').value=''\">Done</div>";//"</input type=text id=t></input></div>";
  }
 }
 
@@ -294,4 +300,4 @@ for(var i = 0; i < 4; i++){
 }
 
 
-/// 7:33 06.04.2020
+/// 7:29 09.04.2020
