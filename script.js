@@ -1,8 +1,8 @@
-// 7:08 09.04.2020
+// 8:48 11.04.2020
 /*
  tasks:
 : style for level more than max defined or less than min defined.
-: program (type every symbol correctly). If typed a wrong symbol, it is a mistake. Each mistake requires users to type the word correctly twice additionaly.
+: [done] program (type every symbol correctly). If typed a wrong symbol, it is a mistake. Each mistake requires users to type the ord correctly twice additionaly.
 : [done] call insrease word level program by clicking on a word
 : SQL! - time for this?
 : [done] drag&drop text to text (apply vocabulary to text)
@@ -154,6 +154,21 @@ function Text(ref='text'){
   return this.abc.show();
  } 
 }
+
+ var checkInput = function(e){
+  var jj =  String.fromCharCode(e.keyCode || e.which)
+  var written = document.getElementById('t').value + jj;
+  var studying = document.getElementById('k').innerHTML;
+//  alert(written + " vs " + studying);
+  if(studying.indexOf(written) == -1){
+   document.getElementById('t').value = "";
+   var c = document.getElementById('c').innerHTML;
+   c= eval(c) + 2;
+   document.getElementById('c').innerHTML=c;
+  }
+ }
+
+
 function Program(Vocabulary){
  this.name = "P";
  this.V = Vocabulary;
@@ -179,8 +194,9 @@ function Program(Vocabulary){
   var func = function(id, word){
    alert(document.getElementById(id).value == word);
   }
-  el.innerHTML = " <div id=in><div>" + word+ "</div>" + "<textarea id=t></textarea><div id=c hidden>1</div>" + "<div onclick=\"if(document.getElementById('t').value=='" + word + "'){var c = document.getElementById('c').innerHTML; c= eval(c) - 1; document.getElementById('c').innerHTML=c;if(c==0){ " + this.name + ".levelup('" + word + "');}}else{var c = document.getElementById('c').innerHTML; c= eval(c) + 2; document.getElementById('c').innerHTML=c;};document.getElementById('t').value=''\">Done</div>";//"</input type=text id=t></input></div>";
+  el.innerHTML = " <div id=in><div id=k>" + word+ "</div>" + "<textarea id=t onkeypress='checkInput(event)'></textarea><div id=c hidden>1</div>" + "<div onclick=\"if(document.getElementById('t').value=='" + word + "'){var c = document.getElementById('c').innerHTML; c= eval(c) - 1; document.getElementById('c').innerHTML=c;if(c==0){ " + this.name + ".levelup('" + word + "');}}else{var c = document.getElementById('c').innerHTML; c= eval(c) + 2; document.getElementById('c').innerHTML=c;};document.getElementById('t').value=''\">Done</div>";//"</input type=text id=t></input></div>";
  }
+// setTimeout("document.getElementById('t').addEventListener('keypress', checkInput(e))", 100);
 }
 
 function Vocabulary(){
@@ -300,4 +316,4 @@ for(var i = 0; i < 4; i++){
 }
 
 
-/// 7:29 09.04.2020
+/// 9:06 11.04.2020
